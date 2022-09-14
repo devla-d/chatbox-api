@@ -10,13 +10,12 @@ const validateReg = async (req: Request, res: Response, next: NextFunction) => {
   const { error } = RegSchema.validate(req.body);
   if (error) {
     const errors = error.details.map((e) => e.message);
-    return res.status(400).json(errors);
+    return res.status(400).json({ errors: errors });
   }
   const emailExist = await validatEmail(email);
   const usernameExist = await validateUsername(username);
-  if (emailExist) return res.status(400).json({ error: "email already exist" });
-  if (usernameExist)
-    return res.status(400).json({ error: "username already exist" });
+  if (emailExist) return res.json({ error: "email already exist" });
+  if (usernameExist) return res.json({ error: "username already exist" });
 
   next();
 };
