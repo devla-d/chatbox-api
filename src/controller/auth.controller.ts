@@ -29,26 +29,27 @@ export const regisTerUser = async (req: Request, res: Response) => {
 };
 
 export const LoginUser = async (req: Request, res: Response) => {
+  console.log(req.body);
   const { username, password } = req.body;
   const { error } = LoginSchema.validate(req.body);
   if (error) {
     const errors = error.details.map((e) => e.message);
-    return res.status(400).json(errors);
+    return res.json({ error: errors });
   }
   try {
     const user = await User.findOne({ where: { username: username } });
-    if (!user)
-      return res.status(400).json({ error: "Invalid username Or password" });
+    if (!user) return res.json({ error: "Invalid username Or password" });
     const isMatch = bcrypt.compareSync(password, user.password);
     if (isMatch) {
       const { accessToken, refreshToken } = await generateTokens(user);
       return res.json({
+        msg: "Sucessfuly loggin",
         user: user,
         accessToken: accessToken,
         refreshToken: refreshToken,
       });
     }
-    return res.status(400).json({ error: "Invalid username Or password" });
+    return res.json({ error: "Invalid username Or password" });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "something went wrong" });
