@@ -4,6 +4,7 @@ import bcrypt from "bcrypt";
 import User from "../models/user.model";
 import generateTokens from "../services/generate-token.service";
 import { LoginSchema } from "../services/login.service";
+import { CustomError } from "../services/custom-error.service";
 
 export const regisTerUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body;
@@ -51,5 +52,18 @@ export const LoginUser = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "something went wrong" });
+  }
+};
+
+export const GetExistingData = async (req: Request, res: Response) => {
+  try {
+    const users = await User.findAll();
+    const UsersEmail = users.map((user) => user.email);
+    const UsersUsername = users.map((user) => user.username);
+
+    return res.json({ UsersEmail, UsersUsername });
+  } catch (error) {
+    console.log(error);
+    throw new CustomError("An internal Error occured");
   }
 };
