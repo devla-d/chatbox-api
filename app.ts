@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express";
-import * as WebSocket from "ws";
 import * as http from "http";
+import socketio from "socket.io";
 import cors from "cors";
 import dBInit from "./src/config/db.init";
 import authRouter from "./src/routes/auth.router";
@@ -9,10 +9,10 @@ import handleError from "./src/middleware/custom-error.middleware";
 const app = express();
 
 const server = http.createServer(app);
-const wss = new WebSocket.Server({ server });
+export const io = new socketio.Server(server);
 
 const corsOptions = {
-  origin: ["http://localhost:5173"],
+  origin: ["http://localhost:5173", "http://localhost:5500"],
 };
 
 app.use(cors(corsOptions));
@@ -21,17 +21,16 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(authRouter);
 
-wss.on("connection", (ws: WebSocket) => {
-  //connection is up, let's add a simple simple event
-  ws.on("message", (message: string) => {
-    //log the received message and send it back to the client
-
-    console.log("received: %s", message);
-    ws.send(`Hello, you sent -> ${message}`);
+io.on("connection", (socket) => {
+  console.log("Connected to ws");
+  socket.emit("message", "Welcome");
+  socket.broadcast.emit("message", "a user joined");
+  socket.on("ChatMsg", (msg) => {
+    console.log(msg);
   });
-
-  //send immediatly a feedback to the incoming connection
-  ws.send("Hi there, I am a WebSocket server");
+  socket.on("disconnect", () => {
+    socket.broadcast.emit("message", "a user left");
+  });
 });
 
 app.use(function (req: Request, res: Response, next: NextFunction) {
