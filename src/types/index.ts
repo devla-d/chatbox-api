@@ -6,3 +6,9 @@ export interface AuthUser {
   iat?: number;
   exp?: number;
 }
+
+export interface RegisterType {
+  username?: string;
+  email?: string;
+  password?: string;
+}

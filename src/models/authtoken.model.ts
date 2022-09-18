@@ -13,7 +13,6 @@ class AuthToken extends Model<
 > {
   declare userId: number;
   declare refreshToken: string;
-  declare expiresAt: Date;
 }
 
 AuthToken.init(
@@ -24,10 +23,6 @@ AuthToken.init(
     },
     refreshToken: {
       type: DataTypes.STRING,
-      allowNull: true,
-    },
-    expiresAt: {
-      type: DataTypes.DATE,
       allowNull: true,
     },
   },

@@ -15,6 +15,9 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare createdAt: CreationOptional<Date>;
   declare updatedAt: CreationOptional<Date>;
   declare roles: "user" | "admin" | "super_admin";
+  declare online: boolean;
+  declare image?: string;
+  declare friends?: Array<number>;
 }
 
 User.init(
@@ -34,6 +37,14 @@ User.init(
       unique: true,
       allowNull: false,
     },
+    online: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    image: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
     password: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -43,6 +54,10 @@ User.init(
     roles: {
       type: DataTypes.STRING,
       defaultValue: "user",
+    },
+    friends: {
+      type: DataTypes.ARRAY(DataTypes.INTEGER.UNSIGNED),
+      defaultValue: [],
     },
   },
   {

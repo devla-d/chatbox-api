@@ -5,17 +5,19 @@ import User from "../models/user.model";
 import generateTokens from "../services/generate-token.service";
 import { LoginSchema } from "../services/login.service";
 import { CustomError } from "../services/custom-error.service";
+import { RegisterType } from "../types";
 
 export const regisTerUser = async (req: Request, res: Response) => {
-  const { username, email, password } = req.body;
+  const { username, email, password } = req.body as RegisterType;
   try {
-    const passwordHash = await bcrypt.hash(password, 10);
+    const passwordHash = await bcrypt.hash(password!, 10);
 
     const user = await User.create({
-      username,
-      email,
+      username: username!,
+      email: email!,
       password: passwordHash,
       roles: "user",
+      online: false,
     });
     console.log(user);
 

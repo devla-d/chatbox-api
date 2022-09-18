@@ -26,10 +26,8 @@ const generateTokens = async (user: User) => {
 
     const authToken = await AuthToken.findOne({ where: { userId: user.id } });
     if (authToken) await authToken.destroy();
-    var expiresAt = new Date();
-    expiresAt.setDate(expiresAt.getDate() + 2);
 
-    await AuthToken.create({ userId: user.id, refreshToken, expiresAt });
+    await AuthToken.create({ userId: user.id, refreshToken });
     return Promise.resolve({ accessToken, refreshToken });
   } catch (err) {
     console.log(err);
