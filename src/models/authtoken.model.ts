@@ -3,9 +3,8 @@ import {
   DataTypes,
   InferAttributes,
   InferCreationAttributes,
-  Association,
 } from "sequelize";
-import User from "./user.model";
+
 import sequelize from "../config/db.config";
 
 class AuthToken extends Model<
@@ -37,7 +36,5 @@ AuthToken.init(
     tableName: "authtoken",
   }
 );
-
-User.hasOne(AuthToken, { foreignKey: "userId" });
 
 export default AuthToken;

@@ -1,4 +1,8 @@
+import AuthToken from "../models/authtoken.model";
+import User from "../models/user.model";
 import sequelizeConnection from "./db.config";
+
+User.hasOne(AuthToken, { foreignKey: "userId" });
 
 const dBInit = async () => {
   await sequelizeConnection
