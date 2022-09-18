@@ -23,7 +23,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
 User.init(
   {
     id: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
@@ -56,7 +56,7 @@ User.init(
       defaultValue: "user",
     },
     friends: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER.UNSIGNED),
+      type: DataTypes.ARRAY(DataTypes.INTEGER),
       defaultValue: [],
     },
   },

@@ -18,7 +18,7 @@ class AuthToken extends Model<
 AuthToken.init(
   {
     userId: {
-      type: DataTypes.INTEGER.UNSIGNED,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     refreshToken: {
