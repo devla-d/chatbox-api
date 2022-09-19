@@ -1,10 +1,12 @@
+import Groups from "../models/group";
 import AuthToken from "../models/authtoken";
+
 import User from "../models/user";
+
 import sequelizeConnection from "./config";
 
 const syncDb = () => {
-  sequelizeConnection
-    .sync({ force: true })
+  Groups.sync({ force: true })
     .then(() => {
       console.log("  table created successfully!");
     })
