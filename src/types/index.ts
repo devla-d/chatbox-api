@@ -12,3 +12,18 @@ export interface RegisterType {
   email?: string;
   password?: string;
 }
+
+export interface UserModel {
+  id: number;
+  email: string;
+  username: string;
+  password: string;
+  createdAt: Date;
+  updatedAt: Date;
+  roles: "user" | "admin" | "super_admin";
+  online: boolean;
+  image?: string;
+  friends?: Array<number>;
+}
+
+export interface AuthtokenModel {}
