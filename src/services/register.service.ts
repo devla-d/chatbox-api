@@ -1,5 +1,5 @@
 import Joi from "joi";
-import User from "../models/user.model";
+import User from "../models/user";
 
 const passwordRules = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{6,12}$/;
 const RegSchema = Joi.object().keys({

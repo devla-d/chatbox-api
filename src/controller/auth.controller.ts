@@ -1,11 +1,10 @@
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
-
-import User from "../models/user.model";
 import generateTokens from "../services/generate-token.service";
 import { LoginSchema } from "../services/login.service";
 import { CustomError } from "../services/custom-error.service";
 import { RegisterType } from "../types";
+import User from "../models/user";
 
 export const regisTerUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body as RegisterType;

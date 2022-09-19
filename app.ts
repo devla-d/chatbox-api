@@ -5,7 +5,8 @@ import cors from "cors";
 import authRouter from "./src/routes/auth.router";
 import handleError from "./src/middleware/custom-error.middleware";
 import dotenv from "dotenv";
-import db from "./src/models";
+import dBInit from "./src/config/db.init";
+
 dotenv.config();
 
 const app = express();
@@ -45,21 +46,5 @@ const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
   console.log(`Listening to port ${PORT}`);
-  db.sequelize
-    .authenticate()
-    .then(() => {
-      console.log("Connection has been established successfully.");
-
-      db.sequelize
-        .sync({ force: true })
-        .then(() => {
-          console.log("  table created successfully!");
-        })
-        .catch((error: any) => {
-          console.error("Unable to create table : ", error);
-        });
-    })
-    .catch((error: any) => {
-      console.error("Unable to connect to the database: ", error);
-    });
+  dBInit();
 });
