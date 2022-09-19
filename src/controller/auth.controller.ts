@@ -40,6 +40,7 @@ export const LoginUser = async (req: Request, res: Response) => {
   }
   try {
     const user = await User.findOne({ where: { username: username } });
+
     if (!user) return res.json({ error: "Invalid username Or password" });
     const isMatch = bcrypt.compareSync(password, user.password);
     if (isMatch) {
