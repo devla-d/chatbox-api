@@ -1,6 +1,12 @@
 import AuthToken from "../models/authtoken.model";
+import Group from "../models/group.model";
+import Room from "../models/room.model";
 import User from "../models/user.model";
 import sequelizeConnection from "./db.config";
+
+User.hasOne(AuthToken, { foreignKey: "userId" });
+Group.hasMany(User);
+Room.hasOne(Group, { foreignKey: { name: "groupID", allowNull: true } });
 
 const syncDb = () => {
   sequelizeConnection

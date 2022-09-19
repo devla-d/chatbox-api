@@ -18,6 +18,14 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare online: boolean;
   declare image?: string;
   declare friends?: Array<number>;
+
+  async addFriend(user_id: number) {
+    if (!this.friends) return;
+    if (!this.friends.includes(user_id)) {
+      this.friends.push(user_id);
+      await this.save();
+    }
+  }
 }
 
 User.init(
