@@ -19,6 +19,7 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare online: boolean;
   declare image?: string | undefined;
   declare friends?: number[] | undefined;
+  declare bio: CreationOptional<string>;
   /**
    * Helper method for defining associations.
    * This method is not a part of Sequelize lifecycle.
@@ -67,6 +68,10 @@ User.init(
     friends: {
       type: DataTypes.ARRAY(DataTypes.INTEGER),
       defaultValue: [],
+    },
+    bio: {
+      type: DataTypes.STRING,
+      allowNull: true,
     },
   },
   {

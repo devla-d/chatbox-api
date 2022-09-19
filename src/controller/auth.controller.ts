@@ -18,7 +18,6 @@ export const regisTerUser = async (req: Request, res: Response) => {
       roles: "user",
       online: false,
     });
-    console.log(user);
 
     return res
       .status(200)

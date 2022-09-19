@@ -6,7 +6,8 @@ import User from "../models/user";
 import sequelizeConnection from "./config";
 
 const syncDb = () => {
-  Groups.sync({ force: true })
+  sequelizeConnection
+    .sync({ force: true })
     .then(() => {
       console.log("  table created successfully!");
     })
