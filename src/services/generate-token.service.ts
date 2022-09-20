@@ -1,5 +1,6 @@
 import jwt, { Secret } from "jsonwebtoken";
 import AuthToken from "../models/authtoken";
+import { AuthUser } from "../types";
 import User from "../models/user";
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -35,4 +36,17 @@ const generateTokens = async (user: User) => {
   }
 };
 
+export const newAccessToken = (user: AuthUser) => {
+  const payload = {
+    id: user.id,
+    role: user.role,
+    username: user.username,
+    email: user.email,
+  };
+  const accessToken = jwt.sign(payload, ACCESS_TOKEN_PRIVATE_KEY, {
+    expiresIn: "20s",
+  });
+
+  return accessToken;
+};
 export default generateTokens;
