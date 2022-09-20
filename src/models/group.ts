@@ -13,14 +13,19 @@ class Groups extends Model<
 > {
   declare adminId: number;
   declare users: Array<number>;
+  declare name: string;
 
   static associate(models: any) {
     // define association here
-    // Groups.hasMany(models.User);
+    Groups.hasMany(models.User);
   }
 }
 Groups.init(
   {
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
     adminId: {
       type: DataTypes.INTEGER,
       allowNull: false,

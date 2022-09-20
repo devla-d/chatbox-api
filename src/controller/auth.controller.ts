@@ -1,10 +1,13 @@
 import { Request, Response } from "express";
+import jwt, { Secret } from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import generateTokens from "../services/generate-token.service";
 import { LoginSchema } from "../services/login.service";
 import { CustomError } from "../services/custom-error.service";
 import { RegisterType } from "../types";
 import User from "../models/user";
+
+const SECRET_KEY = process.env.ACCESS_TOKEN_PRIVATE_KEY as Secret;
 
 export const regisTerUser = async (req: Request, res: Response) => {
   const { username, email, password } = req.body as RegisterType;
@@ -68,4 +71,18 @@ export const GetExistingData = async (req: Request, res: Response) => {
     console.log(error);
     throw new CustomError("An internal Error occured");
   }
+};
+
+export const RefreshToken = async (req: Request, res: Response) => {
+  console.log(req.body);
+  const refreshToken = req.body.refreshToken;
+  console.log(refreshToken);
+  if (!refreshToken) res.status(400).json({ error: "Invalid refreshToken" });
+  jwt.verify(refreshToken, SECRET_KEY, (err: any, user: any) => {
+    if (err) return res.status(400).json({ msg: "Refres Token Expired" });
+    if (user) {
+      console.log(user);
+      res.status(200).json({ msg: "gen" });
+    }
+  });
 };

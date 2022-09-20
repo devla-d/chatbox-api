@@ -21,7 +21,7 @@ const dBInit = async () => {
     .authenticate()
     .then(() => {
       console.log("Connection has been established successfully.");
-      syncDb();
+      // syncDb();
     })
     .catch((error) => {
       console.error("Unable to connect to the database: ", error);
