@@ -103,13 +103,13 @@ export const changeProfileImg = async (req: Request, res: Response) => {
       // @ts-ignore
       var imageName = image.name;
       // @ts-ignore
-      image.mv(BASE_DIR + "/media/" + imageName, async (error) => {
+      image.mv(BASE_DIR + "/public/media/" + imageName, async (error) => {
         console.log(error);
         if (error) return res.status(400).json(error);
         user.image = "/media/" + imageName;
         await user.save();
 
-        return res.status(200).json({ msg: "Uplaod successfull", user });
+        return res.status(200).json({ msg: "Uplaod successfull", user: user });
       });
     }
   } catch (error) {

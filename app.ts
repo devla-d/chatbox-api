@@ -7,6 +7,7 @@ import authRouter from "./src/routes/auth.router";
 import handleError from "./src/middleware/custom-error.middleware";
 import dotenv from "dotenv";
 import dBInit from "./src/config/db.init";
+import path from "path";
 
 dotenv.config();
 
@@ -22,6 +23,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(express.static(path.join(__dirname, "src/public")));
+
 app.use(upload());
 
 app.use(authRouter);
