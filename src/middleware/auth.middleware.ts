@@ -13,7 +13,7 @@ const authRequired = (req: Request, res: Response, next: NextFunction) => {
   if (token == null) return res.sendStatus(401);
 
   jwt.verify(token, SECRET_KEY, (err: any, user) => {
-    if (err) return res.status(403).json({ msg: "Token Expired" });
+    if (err) return res.status(401).json({ msg: "Token Expired" });
 
     req.user = user as AuthUser;
 

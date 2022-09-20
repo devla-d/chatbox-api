@@ -79,7 +79,6 @@ export const RefreshToken = async (req: Request, res: Response) => {
 
   if (!refreshToken) res.status(400).json({ error: "Invalid refreshToken" });
   jwt.verify(refreshToken, SECRET_KEY, (err: any, user: any) => {
-    console.log(err);
     if (err) return res.json({ error: "Refresh Token Expired" });
     if (user) {
       const accesstoken = newAccessToken(user);
