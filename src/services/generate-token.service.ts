@@ -19,10 +19,10 @@ const generateTokens = async (user: User) => {
       email: user.email,
     };
     const accessToken = jwt.sign(payload, ACCESS_TOKEN_PRIVATE_KEY, {
-      expiresIn: "20s",
+      expiresIn: "15m",
     });
     const refreshToken = jwt.sign(payload, REFRESH_TOKEN_PRIVATE_KEY, {
-      expiresIn: "10m",
+      expiresIn: "1d",
     });
 
     const authToken = await AuthToken.findOne({ where: { UserId: user.id } });
@@ -44,7 +44,7 @@ export const newAccessToken = (user: AuthUser) => {
     email: user.email,
   };
   const accessToken = jwt.sign(payload, ACCESS_TOKEN_PRIVATE_KEY, {
-    expiresIn: "20s",
+    expiresIn: "15m",
   });
 
   return accessToken;

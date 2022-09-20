@@ -8,6 +8,9 @@ import { LoginSchema } from "../services/login.service";
 import { CustomError } from "../services/custom-error.service";
 import { RegisterType } from "../types";
 import User from "../models/user";
+import path from "path";
+
+const BASE_DIR = path.join(__dirname, "..");
 
 const SECRET_KEY = process.env.REFRESH_TOKEN_PRIVATE_KEY as Secret;
 
@@ -86,4 +89,31 @@ export const RefreshToken = async (req: Request, res: Response) => {
       res.status(200).json({ accesstoken });
     }
   });
+};
+
+export const changeProfileImg = async (req: Request, res: Response) => {
+  if (!req.files) return res.status(400).json({ error: "file required" });
+  const rUser = req.user!;
+  try {
+    const user = await User.findByPk(rUser.id);
+    if (user === null) {
+      res.status(400).json({ error: "User not found" });
+    } else {
+      var image = req.files.image;
+      // @ts-ignore
+      var imageName = image.name;
+      // @ts-ignore
+      image.mv(BASE_DIR + "/media/" + imageName, async (error) => {
+        console.log(error);
+        if (error) return res.status(400).json(error);
+        user.image = "/media/" + imageName;
+        await user.save();
+
+        return res.status(200).json({ msg: "Uplaod successfull", user });
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    throw new CustomError("An internal Error occured");
+  }
 };
