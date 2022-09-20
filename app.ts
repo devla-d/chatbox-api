@@ -1,6 +1,7 @@
 import express, { NextFunction, Request, Response } from "express";
 import * as http from "http";
 import socketio from "socket.io";
+import upload from "express-fileupload";
 import cors from "cors";
 import authRouter from "./src/routes/auth.router";
 import handleError from "./src/middleware/custom-error.middleware";
@@ -21,6 +22,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(upload());
 
 app.use(authRouter);
 
