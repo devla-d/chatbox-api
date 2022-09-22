@@ -1,10 +1,8 @@
-import { Entity, BaseEntity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column } from "typeorm";
+import BaseModel from ".";
 
 @Entity("users")
-class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  id: number;
-
+class User extends BaseModel {
   @Column({
     unique: true,
     length: 12,
@@ -19,8 +17,8 @@ class User extends BaseEntity {
   @Column({ default: "user" })
   roles: "user" | "admin" | "super_admin";
 
-  @Column({ nullable: true })
-  image: string | null;
+  @Column({ type: String, nullable: true })
+  image?: string;
 
   @Column({ type: Boolean, default: false })
   online: boolean;
