@@ -1,19 +1,18 @@
 {
   "compilerOptions": {
-    "target": "es2016",
+    "target": "esnext",
     "module": "commonjs",
+    "outDir": "./build",
     "rootDir": "./",
     "typeRoots": ["./src/types", "./node_modules/@types"],
-    "allowJs": true,
-
-    "outDir": "./dist",
+    "strict": true,
+    "moduleResolution": "node",
     "esModuleInterop": true,
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
-
-    "strict": true,
-    "skipLibCheck": true
+    "strictPropertyInitialization": false,
+    "emitDecoratorMetadata": true
   },
   "exclude": ["dist", "node_modules"]
 }

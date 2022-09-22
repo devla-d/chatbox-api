@@ -3,12 +3,11 @@ import * as http from "http";
 import socketio from "socket.io";
 import upload from "express-fileupload";
 import cors from "cors";
-import authRouter from "./src/routes/auth.router";
+// import authRouter from "./src/routes/auth.router";
 import handleError from "./src/middleware/custom-error.middleware";
 import dotenv from "dotenv";
-import dBInit from "./src/config/db.init";
 import path from "path";
-import Groups from "./src/models/group";
+import initDb from "./src/config/db.init";
 
 dotenv.config();
 
@@ -28,7 +27,7 @@ app.use(express.static(path.join(__dirname, "src/public")));
 
 app.use(upload());
 
-app.use(authRouter);
+// app.use(authRouter);
 
 io.on("connection", (socket) => {
   console.log("Connected to ws");
@@ -52,5 +51,5 @@ const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
   console.log(`Listening to port ${PORT}`);
-  dBInit();
+  initDb();
 });
