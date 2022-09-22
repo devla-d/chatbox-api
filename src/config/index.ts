@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 import User from "../models/User";
 import Authtoken from "../models/Authtoken";
 import Group from "../models/Group";
+
 dotenv.config();
 
 const DB_NAME = process.env.DB_NAME as string;

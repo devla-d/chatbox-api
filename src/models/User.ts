@@ -31,6 +31,9 @@ class User extends BaseModel {
 
   @Column()
   password: string;
+
+  @Column("int", { array: true, nullable: true, default: [] })
+  friends: Array<number>;
 }
 
 export default User;
