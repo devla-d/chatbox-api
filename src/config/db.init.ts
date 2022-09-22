@@ -1,9 +1,7 @@
-import Groups from "../models/group";
-import AuthToken from "../models/authtoken";
-
-import User from "../models/user";
-
 import sequelizeConnection from "./config";
+import Group from "../models/group";
+import Authtoken from "../models/authtoken";
+import User from "../models/user";
 
 const syncDb = () => {
   sequelizeConnection
@@ -21,7 +19,7 @@ const dBInit = async () => {
     .authenticate()
     .then(() => {
       console.log("Connection has been established successfully.");
-      // syncDb();
+      syncDb();
     })
     .catch((error) => {
       console.error("Unable to connect to the database: ", error);

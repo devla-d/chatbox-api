@@ -1,3 +1,4 @@
+import { userInfo } from "os";
 import {
   CreationOptional,
   DataTypes,
@@ -20,15 +21,6 @@ class User extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
   declare image?: string | undefined;
   declare friends?: number[] | undefined;
   declare bio: CreationOptional<string>;
-  /**
-   * Helper method for defining associations.
-   * This method is not a part of Sequelize lifecycle.
-   * The `models/index` file will call this method automatically.
-   */
-
-  static associate(models: any) {
-    // define association here
-  }
 }
 User.init(
   {
@@ -76,7 +68,7 @@ User.init(
   },
   {
     sequelize,
-    modelName: "User",
+    modelName: "user",
   }
 );
 

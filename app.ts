@@ -8,6 +8,7 @@ import handleError from "./src/middleware/custom-error.middleware";
 import dotenv from "dotenv";
 import dBInit from "./src/config/db.init";
 import path from "path";
+import Groups from "./src/models/group";
 
 dotenv.config();
 

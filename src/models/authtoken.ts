@@ -6,23 +6,11 @@ import {
 } from "sequelize";
 
 import sequelize from "../config/config";
+import User from "./user";
 
-class Authtoken extends Model<
-  InferAttributes<Authtoken>,
-  InferCreationAttributes<Authtoken>
-> {
-  /**
-   * Helper method for defining associations.
-   * This method is not a part of Sequelize lifecycle.
-   * The `models/index` file will call this method automatically.
-   */
-
-  declare UserId: number;
+class Authtoken extends Model<InferAttributes<Authtoken>> {
+  declare UserId?: number;
   declare refreshToken: string;
-  static associate(models: any) {
-    // define association here
-    Authtoken.belongsTo(models.User);
-  }
 }
 Authtoken.init(
   {
@@ -37,8 +25,10 @@ Authtoken.init(
   },
   {
     sequelize,
-    modelName: "Authtoken",
+    modelName: "authtoken",
   }
 );
 
+User.hasOne(Authtoken);
+Authtoken.belongsTo(User);
 export default Authtoken;

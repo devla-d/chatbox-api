@@ -6,22 +6,24 @@ import {
 } from "sequelize";
 
 import sequelize from "../config/config";
+import User from "./user";
 
-class Groups extends Model<
-  InferAttributes<Groups>,
-  InferCreationAttributes<Groups>
+class Group extends Model<
+  InferAttributes<Group>,
+  InferCreationAttributes<Group>
 > {
+  declare id?: number;
   declare adminId: number;
-  declare users: Array<number>;
-  declare name: string;
-
-  static associate(models: any) {
-    // define association here
-    Groups.hasMany(models.User);
-  }
+  // declare users: Array<number>;
+  declare name?: string;
 }
-Groups.init(
+Group.init(
   {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+    },
     name: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -30,15 +32,18 @@ Groups.init(
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    users: {
-      type: DataTypes.ARRAY(DataTypes.INTEGER),
-      defaultValue: [],
-    },
+    // users: {
+    //   type: DataTypes.ARRAY(DataTypes.INTEGER),
+    //   allowNull: true,
+    // },
   },
   {
     sequelize,
-    modelName: "Group",
+    modelName: "group",
   }
 );
 
-export default Groups;
+User.belongsToMany(Group, { through: "users_group" });
+Group.belongsToMany(User, { through: "users_group" });
+
+export default Group;
