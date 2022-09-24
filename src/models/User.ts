@@ -2,7 +2,7 @@ import { Entity, Column } from "typeorm";
 import BaseModel from ".";
 
 @Entity("users")
-class User extends BaseModel {
+export class User extends BaseModel {
   @Column({
     unique: true,
     length: 12,
@@ -31,9 +31,4 @@ class User extends BaseModel {
 
   @Column()
   password: string;
-
-  @Column("int", { array: true, nullable: true, default: [] })
-  friends: Array<number>;
 }
-
-export default User;

@@ -3,7 +3,7 @@
     "target": "esnext",
     "module": "commonjs",
     "outDir": "./build",
-    "rootDir": "./",
+    "rootDir": "./src",
     "typeRoots": ["./src/types", "./node_modules/@types"],
     "strict": true,
     "moduleResolution": "node",

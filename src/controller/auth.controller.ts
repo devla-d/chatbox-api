@@ -7,7 +7,7 @@ import generateTokens, {
 import { LoginSchema } from "../services/login.service";
 import { CustomError } from "../services/custom-error.service";
 import { RegisterType } from "../types";
-import User from "../models/user";
+import { User } from "../models/User";
 import path from "path";
 import { deleteFile } from "../services/deletefile.service";
 
@@ -67,7 +67,7 @@ export const LoginUser = async (req: Request, res: Response) => {
 
 export const GetExistingData = async (req: Request, res: Response) => {
   try {
-    const users = await User.findAll();
+    const users = await User.find();
     const UsersEmail = users.map((user) => user.email);
     const UsersUsername = users.map((user) => user.username);
 
@@ -96,7 +96,7 @@ export const changeProfileImg = async (req: Request, res: Response) => {
   if (!req.files) return res.status(400).json({ error: "file required" });
   const rUser = req.user!;
   try {
-    const user = await User.findByPk(rUser.id);
+    const user = await User.findOne({ where: { id: rUser.id } });
     if (user === null) return res.status(400).json({ error: "User not found" });
     console.log(user.image);
     if (!user.image === null) deleteFile(BASE_DIR + "/public" + user.image);

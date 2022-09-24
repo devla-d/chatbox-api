@@ -4,17 +4,16 @@ import socketio from "socket.io";
 import upload from "express-fileupload";
 import cors from "cors";
 // import authRouter from "./src/routes/auth.router";
-import handleError from "./src/middleware/custom-error.middleware";
+import handleError from "./middleware/custom-error.middleware";
 import dotenv from "dotenv";
 import path from "path";
-import initDb from "./src/config/db.init";
 
 dotenv.config();
 
 const app = express();
 
-const server = http.createServer(app);
-export const io = new socketio.Server(server);
+const App = http.createServer(app);
+export const io = new socketio.Server(App);
 
 const corsOptions = {
   origin: ["http://localhost:5173", "http://localhost:5500"],
@@ -47,9 +46,4 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
 });
 app.use(handleError);
 
-const PORT = process.env.PORT || 3000;
-
-server.listen(PORT, () => {
-  console.log(`Listening to port ${PORT}`);
-  initDb();
-});
+export default App;

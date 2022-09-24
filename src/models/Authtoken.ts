@@ -1,8 +1,13 @@
-import { Entity, Column } from "typeorm";
+import { Entity, Column, JoinColumn, OneToOne } from "typeorm";
 import BaseModel from ".";
+import { User } from "./User";
 
 @Entity("authtoken")
 class Authtoken extends BaseModel {
+  @OneToOne(() => User)
+  @JoinColumn()
+  user: User;
+
   @Column()
   refreshToken: string;
 }

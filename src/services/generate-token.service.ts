@@ -1,7 +1,7 @@
 import jwt, { Secret } from "jsonwebtoken";
-import AuthToken from "../models/authtoken";
+import AuthToken from "../models/Authtoken";
 import { AuthUser } from "../types";
-import User from "../models/user";
+import { User } from "../models/User";
 import * as dotenv from "dotenv";
 dotenv.config();
 
@@ -25,10 +25,13 @@ const generateTokens = async (user: User) => {
       expiresIn: "1d",
     });
 
-    const authToken = await AuthToken.findOne({ where: { UserId: user.id } });
-    if (authToken) await authToken.destroy();
+    const authToken = await AuthToken.findOne({
+      where: { user: { id: user.id } },
+    });
+    if (authToken) await authToken.remove();
 
-    await AuthToken.create({ UserId: user.id, refreshToken });
+    const token = AuthToken.create({ user: user, refreshToken: refreshToken });
+    await token.save();
     return Promise.resolve({ accessToken, refreshToken });
   } catch (err) {
     console.log(err);
