@@ -20,13 +20,15 @@ export const regisTerUser = async (req: Request, res: Response) => {
   try {
     const passwordHash = await bcrypt.hash(password!, 10);
 
-    const user = await User.create({
+    const user = User.create({
       username: username!,
       email: email!,
       password: passwordHash,
       roles: "user",
       online: false,
     });
+
+    await user.save();
 
     return res
       .status(200)
