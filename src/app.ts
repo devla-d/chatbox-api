@@ -3,7 +3,7 @@ import * as http from "http";
 import socketio from "socket.io";
 import upload from "express-fileupload";
 import cors from "cors";
-// import authRouter from "./src/routes/auth.router";
+import authRouter from "./routes/auth.router";
 import handleError from "./middleware/custom-error.middleware";
 import dotenv from "dotenv";
 import path from "path";
@@ -26,7 +26,7 @@ app.use(express.static(path.join(__dirname, "src/public")));
 
 app.use(upload());
 
-// app.use(authRouter);
+app.use(authRouter);
 
 io.on("connection", (socket) => {
   console.log("Connected to ws");
