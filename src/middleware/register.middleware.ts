@@ -4,10 +4,12 @@ import { RegisterService } from "../services/register.service";
 const regService = new RegisterService();
 const validateReg = async (req: Request, res: Response, next: NextFunction) => {
   const { username, email } = req.body;
-  const { error } = regService.RegSchema.validate(req.body);
+  const { error } = regService.RegSchema.validate(req.body, {
+    abortEarly: false,
+  });
   if (error) {
     const errors = error.details.map((e) => e.message);
-    return res.status(400).json({ errors: errors });
+    return res.json({ errors: errors });
   }
   const emailExist = await regService.validatEmail(email);
   const usernameExist = await regService.validateUsername(username);
